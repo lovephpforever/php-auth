@@ -84,7 +84,7 @@ final class Utilities
             echo "<meta http-equiv=\"refresh\" content=\"0;url=$url\" />";
             echo "<script type=\"application/javascript\">";
             echo "window.location.replace(\"$url\");";
-            echo "</script>"
+            echo "</script>";
         }
         exit();
     }
