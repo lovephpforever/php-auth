@@ -32,6 +32,30 @@ use RuntimeException;
  */
 final class Session
 {
+    /** @var array $options The session handlers options. */
+    private $options = [];
+
+    /**
+     * Construct a new session handler.
+     *
+     * @param string $sessionName The sessions namespace.
+     * @param array  $options     The session handlers options.
+     *
+     * @return void Returns nothing.
+     */
+    public function __construct(string $sessionName, array $options = [])
+    {
+        if (!\headers_sent()) {
+            \session_name($sessionName);
+        }
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
+        if (!$this->exists()) {
+            $this->start();
+        }
+    }
+
     /**
      * Starts or resumes a session.
      *
@@ -141,5 +165,36 @@ final class Session
     public function delete(string $key): void
     {
         unset($_SESSION[$key]);
+    }
+
+    /**
+     * Get the fingerprint from the current accessing user.
+     *
+     * @return string Returns the session fingerprint.
+     */
+    private function getFingerprint(): string
+    {
+        $remoteIp = $this->options['validate_ip'] ? $_SERVER['REMOTE_ADDR'] : '-';
+        $userAgent = $this->options['validate_ua'] ? $_SERVER['HTTP_USER_AGENT'] : '-';
+        return \hash('sha512', \sprintf('%s|%s', $remoteIp, $userAgent));
+    }
+
+    /**
+     * Configure the session handlers options.
+     *
+     * @param OptionsResolver The symfony options resolver.
+     *
+     * @return void Returns nothing.
+     */
+    private function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'fingerprinting'  => \true,
+            'validate_ip'     => \true,
+            'validate_ua'     => \true,
+        ]);
+        $resolver->setAllowedTypes('fingerprinting', 'bool');
+        $resolver->setAllowedTypes('validate_ip', 'bool');
+        $resolver->setAllowedTypes('validate_ua', 'bool');
     }
 }
