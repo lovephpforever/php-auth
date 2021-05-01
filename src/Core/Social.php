@@ -115,7 +115,7 @@ final class Social
      */
     public function destroy(string $email): void
     {
-        $db->delete('social_logins', [
+        $this->connection->delete('social_logins', [
             'email' => $email
         ]);
     }
