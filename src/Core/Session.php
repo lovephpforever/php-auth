@@ -43,7 +43,7 @@ final class Session
      */
     public function regenerate(bool $deleteOldSession = \true): bool
     {
-        return session_regenerate_id($deleteOldSession);
+        return \session_regenerate_id($deleteOldSession);
     }
 
     /**
