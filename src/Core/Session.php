@@ -33,7 +33,7 @@ final class Session
     public function exists(): bool
     {
         if (\php_sapi_name() !== 'cli') {
-            return session_status() === \PHP_SESSION_ACTIVE ? \true : \false;
+            return \session_status() === \PHP_SESSION_ACTIVE ? \true : \false;
         }
         return \false;
     }
