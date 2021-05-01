@@ -29,7 +29,7 @@ use InvalidArgumentException;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 
 /**
- * The password hasher.
+ * The csrf validator.
  */
 final class Csrf
 {
