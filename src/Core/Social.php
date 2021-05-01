@@ -91,7 +91,6 @@ final class Social
                     'email' => $userProfile->email
                 ]);
             }
-            $redirectTo = '/dashboard';
         } else {
             $password = $this->hasher->compute($this->utilities->generateString(30));
             $this->connection->insert('users', [
@@ -103,11 +102,10 @@ final class Social
                 'access_token' => $adapter->getAccessToken(),
                 'email'        => $userProfile->email
             ]);
-            $redirectTo = '/auth/username';
         }
         $this->session->put('logged_in', \true);
         $this->session->put('email', $userProfile->email);
-        $this->utilities->redirect($redirectTo);
+        $this->utilities->redirect('/dashboard');
     }
 
     /**
