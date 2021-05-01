@@ -62,7 +62,7 @@ final class Utilities
             throw new RangeException('Length must be a positive integer');
         }
         $pieces = [];
-        $max = Binary::safeStrlen($keyspace, '8bit') - 1;
+        $max = Binary::safeStrlen($keyspace) - 1;
         for ($i = 0; $i < $length; ++$i) {
             $pieces []= $keyspace[\random_int(0, $max)];
         }
