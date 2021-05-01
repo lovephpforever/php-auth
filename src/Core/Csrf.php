@@ -36,8 +36,8 @@ final class Csrf
     /**
      * Construct a new password hasher.
      *
-     * @param LovePHPForever\Core\Session $session     The session handler.
-     * @param string                      $tokenPrefix The csrf token prefix.
+     * @param LovePHPForever\Core\Session $session         The session handler.
+     * @param string                      $tokenNamePrefix The csrf token name prefix.
      *
      * @return void Returns nothing.
      */
