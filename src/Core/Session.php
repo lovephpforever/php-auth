@@ -25,6 +25,9 @@
 
 namespace LovePHPForever\Core;
 
+/**
+ * A secure session handler.
+ */
 final class Session
 {
     /**
