@@ -109,4 +109,16 @@ final class Social
         $this->session->put('email', $userProfile->email);
         $this->utilities->redirect($redirectTo);
     }
+
+    /**
+     * Preform a delete on the social logins.
+     *
+     * @return void Returns nothing.
+     */
+    public function destroy(string $email): void
+    {
+        $db->delete('social_logins', [
+            'email' => $email
+        ]);
+    }
 }
