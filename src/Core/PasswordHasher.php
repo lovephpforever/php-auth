@@ -26,6 +26,7 @@
 namespace LovePHPForever\Core;
 
 use InvalidArgumentException;
+use ParagonIE\ConstantTime\Binary;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -60,7 +61,7 @@ final class PasswordHasher
      */
     public function compute(string $password): string
     {
-        if ($this->passwordAlgo === \PASSWORD_BCRYPT && \mb_strlen($password) > 72) {
+        if ($this->passwordAlgo === \PASSWORD_BCRYPT && Binary::safeStrlen($password) > 72) {
             throw new InvalidArgumentException('The password supplied is invalid.');
         }
         return \password_hash($password, $this->passwordAlgo, $this->options);
