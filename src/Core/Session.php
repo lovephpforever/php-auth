@@ -25,11 +25,34 @@
 
 namespace LovePHPForever\Core;
 
+use RuntimeException;
+
 /**
  * A secure session handler.
  */
 final class Session
 {
+    /**
+     * Starts or resumes a session.
+     *
+     * @throws \RuntimeException If the fingerprint supplied is invalid.
+     *
+     * @return bool Returns true on success or false on failure.
+     */
+    public function start(): bool
+    {
+        $session = \session_start();
+        if ($this->has('fingerprint')) {
+            if (!\hash_equals($this->get('fingerprint'), $this->getFingerprint())) {
+                $this->stop();
+                throw new RuntimeException('The fingerprint supplied is invalid.');
+            }
+        } else {
+            $this->put('fingerprint', $this->getFingerprint());
+        }
+        return $session;
+    }
+
     /**
      * Check to see if a session already exists.
      *
