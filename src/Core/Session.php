@@ -32,16 +32,16 @@ final class Session
      */
     public function exists(): bool
     {
-        if (php_sapi_name() !== 'cli') {
-            return session_status() === PHP_SESSION_ACTIVE ? true : false;
+        if (\php_sapi_name() !== 'cli') {
+            return session_status() === \PHP_SESSION_ACTIVE ? \true : \false;
         }
-        return false;
+        return \false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function regenerate(bool $deleteOldSession = true): bool
+    public function regenerate(bool $deleteOldSession = \true): bool
     {
         return session_regenerate_id($deleteOldSession);
     }
