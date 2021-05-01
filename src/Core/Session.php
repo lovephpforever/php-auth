@@ -27,8 +27,10 @@ namespace LovePHPForever\Core;
 
 final class Session
 {
-/**
-     * {@inheritdoc}
+    /**
+     * Check to see if a session already exists.
+     *
+     * @return bool Returns true if one exists and false if not.
      */
     public function exists(): bool
     {
@@ -39,7 +41,11 @@ final class Session
     }
 
     /**
-     * {@inheritdoc}
+     * Regenerates the session.
+     *
+     * @param bool $deleteOldSession Whether to delete the old session or not.
+     *
+     * @return bool Returns true on success or false on failure.
      */
     public function regenerate(bool $deleteOldSession = \true): bool
     {
