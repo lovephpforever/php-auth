@@ -34,7 +34,7 @@ use ParagonIE\ConstantTime\Base64UrlSafe;
 final class Csrf
 {
     /**
-     * Construct a new password hasher.
+     * Construct a csrf validator.
      *
      * @param LovePHPForever\Core\Session $session         The session handler.
      * @param string                      $tokenNamePrefix The csrf token name prefix.
