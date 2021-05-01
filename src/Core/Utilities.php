@@ -89,4 +89,16 @@ final class Utilities
         }
         exit();
     }
+
+    /**
+     * Force the user to use an encrypted connection.
+     *
+     * @return void Returns nothing.
+     */
+    public function enforceHttps(): void
+    {
+        if (empty($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] !== 'on') {
+            $this->redirect("https://$_SERVER['HTTP_HOST']$_SERVER['REQUEST_URI']", 301);
+        }
+    }
 }
