@@ -105,6 +105,7 @@ final class Social
         }
         $this->session->put('logged_in', \true);
         $this->session->put('email', $userProfile->email);
+        $this->session->regenerate();
         $this->utilities->redirect('/dashboard');
     }
 
