@@ -25,12 +25,67 @@
 
 namespace LovePHPForever\Core;
 
+use RuntimeException;
+
 /**
  * The http-request throttler.
  */
 final class Throttler
 {
-    public function take(string $namespace)
+    /** @var array $options The throttler options. */
+    private $options = [];
+
+    /**
+     * Construct a new http-request throttler.
+     *
+     * @param array $options The throttler options.
+     *
+     * @return void Returns nothing.
+     */
+    public function __construct(array $options = [])
     {
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
+    }
+
+    /**
+     * Throttle an http-request.
+     *
+     * @param string $namespace The throttle namespace.
+     *
+     * @return void Returns nothing.
+     */
+    public function throttle(string $namespace): void
+    {
+        $cacheEntry = "{$namespace}.attempt" . $_SERVER['REMOTE_ADDR'];
+        $entry = $this->cache->getItem($cacheEntry);
+        if (!$entry->isHit()) {
+            $entry->set(1);
+            $entry->expiresAfter($this->options['expires_after']);
+            $this->cache->save($entry);
+        } elseif ($entry->get() > $this->options['max_attempts'])   {
+            throw new RuntimeException('Too many attempts made.');
+        } else {
+            $value = $entry->get++;
+            $entry->set($value);
+        }
+    }
+
+    /**
+     * Configure the throttler options.
+     *
+     * @param OptionsResolver The symfony options resolver.
+     *
+     * @return void Returns nothing.
+     */
+    private function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'max_attempts'  => 10,
+            'expires_after' => 3600,
+        ]);
+        $resolver->setAllowedTypes('max_attempts', 'int');
+        $resolver->setAllowedTypes('expires_after', 'int');
     }
 }
