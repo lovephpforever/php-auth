@@ -39,6 +39,7 @@ final class Social
      * @param \ParagonIE\EasyDB\EasyDB            $connection The database connection.
      * @param \LovePHPForever\Core\Session        $session    A secure session handler.
      * @param \LovePHPForever\Core\PasswordHasher $hasher     The password hasher.
+     * @param \LovePHPForever\Core\Throttler      $throttler  The http-request throttler.
      * @param \LovePHPForever\Core\Utilities      $utilities  The basic class utilities.
      *
      * @return void Returns nothing.
@@ -47,6 +48,7 @@ final class Social
         public EasyDB $connection,
         public Session $session,
         public PasswordHasher $hasher,
+        public Throttler $throttler,
         public Utilities $utilities
     ) {
         //
@@ -61,6 +63,7 @@ final class Social
      */
     public function login(AdapterInterface $adapter): void
     {
+        $this->throttler->throttle();
         $adapter->authenticate();
         $userProfile = $adapter->getUserProfile();
         $userExists = $this->connection->cell(
