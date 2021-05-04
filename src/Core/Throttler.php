@@ -33,9 +33,6 @@ use Symfony\Component\RateLimiter\RateLimiterFactory;
  */
 final class Throttler
 {
-    /** @var array $options The throttler options. */
-    private $options = [];
-
     /** @var array $limiter The rate-limiter factory. */
     private $limiter;
 
@@ -43,15 +40,11 @@ final class Throttler
      * Construct a new http-request throttler.
      *
      * @param \Symfony\Component\RateLimiter\RateLimiterFactory $factory The rate-limiter factory.
-     * @param array                                             $options The throttler options.
      *
      * @return void Returns nothing.
      */
-    public function __construct(RateLimiterFactory $factory, array $options = [])
+    public function __construct(RateLimiterFactory $factory)
     {
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver);
-        $this->options = $resolver->resolve($options);
         $this->limiter = $factory->create($_SERVER['REMOTE_ADDR']);
     }
 
@@ -64,25 +57,8 @@ final class Throttler
      */
     public function throttle(string $namespace): void
     {
-        if (\false === $this->limiter->consume()->isAccepted()) {
+        if (\false === $this->limiter->consume(1)->isAccepted()) {
             throw new RuntimeException('Too many attempts made.');
         }
-    }
-
-    /**
-     * Configure the throttler options.
-     *
-     * @param OptionsResolver The symfony options resolver.
-     *
-     * @return void Returns nothing.
-     */
-    private function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'max_attempts'  => 10,
-            'expires_after' => 3600,
-        ]);
-        $resolver->setAllowedTypes('max_attempts', 'int');
-        $resolver->setAllowedTypes('expires_after', 'int');
     }
 }
