@@ -129,7 +129,7 @@ final class Utilities
      */
     public function getBaseUrl($https = \true): string
     {
-        return $https ? 'https://' . $this->options['host'] : 'http://' . $this->options['base_url'];
+        return $https ? 'https://' . $this->options['host'] : 'http://' . $this->options['host'];
     } 
 
     /**
