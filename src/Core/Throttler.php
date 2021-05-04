@@ -25,6 +25,7 @@
 
 namespace LovePHPForever\Core;
 
+use Psr\Cache\CacheItemPoolInterface;
 use RuntimeException;
 
 /**
@@ -38,11 +39,12 @@ final class Throttler
     /**
      * Construct a new http-request throttler.
      *
-     * @param array $options The throttler options.
+     * @param \Psr\Cache\CacheItemPoolInterface $cache   The cache handler.
+     * @param array                             $options The throttler options.
      *
      * @return void Returns nothing.
      */
-    public function __construct(array $options = [])
+    public function __construct(public CacheItemPoolInterface $cache, array $options = [])
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
