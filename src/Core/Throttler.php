@@ -51,11 +51,9 @@ final class Throttler
     /**
      * Throttle an http-request.
      *
-     * @param string $namespace The throttle namespace.
-     *
      * @return void Returns nothing.
      */
-    public function throttle(string $namespace): void
+    public function throttle(): void
     {
         if (\false === $this->limiter->consume(1)->isAccepted()) {
             throw new RuntimeException('Too many attempts made.');
