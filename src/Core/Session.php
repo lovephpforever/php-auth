@@ -26,6 +26,7 @@
 namespace LovePHPForever\Core;
 
 use RuntimeException;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A secure session handler.
