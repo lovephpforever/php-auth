@@ -27,12 +27,30 @@ namespace LovePHPForever\Core;
 
 use ParagonIE\ConstantTime\Binary;
 use RangeException;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The basic class utilities.
  */
 final class Utilities
 {
+    /** @var array $options The class utilities options. */
+    private $options = [];
+
+    /**
+     * Construct a class utilities manager.
+     *
+     * @param array $options The class utilities options.
+     *
+     * @return void Returns nothing.
+     */
+    public function __construct(\array $options = [])
+    {
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
+    }
+
     /**
      * Removes single and double quotes.
      *
@@ -98,7 +116,34 @@ final class Utilities
     public function enforceHttps(): void
     {
         if (empty($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] !== 'on') {
-            $this->redirect("https://$_SERVER['HTTP_HOST']$_SERVER['REQUEST_URI']", 301);
+            $this->redirect($this->getBaseUrl() . $_SERVER['REQUEST_URI'], 301);
         }
+    }
+
+    /**
+     * Get the base url of this web app.
+     *
+     * @param bool $https Should we include https?
+     *
+     * @return string Returns the base url.
+     */
+    public function getBaseUrl($https = \true): string
+    {
+        return $https ? 'https://' . $this->options['host'] : 'http://' . $this->options['base_url'];
+    } 
+
+    /**
+     * Configure the class manager options.
+     *
+     * @param OptionsResolver The symfony options resolver.
+     *
+     * @return void Returns nothing.
+     */
+    private function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'host' => 'localhost'
+        ]);
+        $resolver->setAllowedTypes('host', 'string');
     }
 }
