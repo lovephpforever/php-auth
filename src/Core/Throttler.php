@@ -25,8 +25,8 @@
 
 namespace LovePHPForever\Core;
 
-use Psr\Cache\CacheItemPoolInterface;
 use RuntimeException;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 /**
  * The http-request throttler.
@@ -36,19 +36,23 @@ final class Throttler
     /** @var array $options The throttler options. */
     private $options = [];
 
+    /** @var array $limiter The rate-limiter factory. */
+    private $limiter;
+
     /**
      * Construct a new http-request throttler.
      *
-     * @param \Psr\Cache\CacheItemPoolInterface $cache   The cache handler.
-     * @param array                             $options The throttler options.
+     * @param \Symfony\Component\RateLimiter\RateLimiterFactory $factory The rate-limiter factory.
+     * @param array                                             $options The throttler options.
      *
      * @return void Returns nothing.
      */
-    public function __construct(public CacheItemPoolInterface $cache, array $options = [])
+    public function __construct(RateLimiterFactory $factory, array $options = [])
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
         $this->options = $resolver->resolve($options);
+        $this->limiter = $factory->create($_SERVER['REMOTE_ADDR']);
     }
 
     /**
@@ -60,17 +64,8 @@ final class Throttler
      */
     public function throttle(string $namespace): void
     {
-        $cacheEntry = "{$namespace}.attempt" . $_SERVER['REMOTE_ADDR'];
-        $entry = $this->cache->getItem($cacheEntry);
-        if (!$entry->isHit()) {
-            $entry->set(1);
-            $entry->expiresAfter($this->options['expires_after']);
-            $this->cache->save($entry);
-        } elseif ($entry->get() > $this->options['max_attempts'])   {
+        if (\false === $this->limiter->consume()->isAccepted()) {
             throw new RuntimeException('Too many attempts made.');
-        } else {
-            $value = $entry->get++;
-            $entry->set($value);
         }
     }
 
