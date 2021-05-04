@@ -209,9 +209,9 @@ final class Session
     private function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'fingerprinting'  => \true,
-            'validate_ip'     => \true,
-            'validate_ua'     => \true,
+            'fingerprinting' => \true,
+            'validate_ip'    => \true,
+            'validate_ua'    => \true,
         ]);
         $resolver->setAllowedTypes('fingerprinting', 'bool');
         $resolver->setAllowedTypes('validate_ip', 'bool');
