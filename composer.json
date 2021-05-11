@@ -1,0 +1,30 @@
+{
+    "name": "lovephpforever/framework",
+    "description": "A fast and secure by default PHP framework that requires zero configuration.",
+    "homepage": "https://github.com/lovephpforever/framework",
+    "keywords": [],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/lovephpforever/framework/issues",
+        "source": "https://github.com/lovephpforever/framework"
+    },
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "johnkary/phpunit-speedtrap": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LovePHPForever\\": "./src"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "prefer-stable": true
+}
