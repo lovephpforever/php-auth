@@ -32,8 +32,8 @@
         </whitelist>
     </filter>
     <listeners>
-		    <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
-	  </listeners>
+        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
+    </listeners>
     <logging>
         <log type="coverage-clover" target="clover.xml" />
     </logging>
