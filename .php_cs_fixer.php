@@ -1,6 +1,37 @@
 <?php
 
-return PhpCsFixer\Config::create()
+declare(strict_types=1);
+/**
+ * MIT License
+ * 
+ * Copyright (c) 2021 LovePHPForever
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+$finder = PhpCsFixer\Finder::create()
+    ->in(__DIR__ . '/src')
+    ->in(__DIR__ . '/test');
+
+$config = new PhpCsFixer\Config();
+$config
+    ->setRiskyAllowed(true)
     ->setRules([
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
@@ -23,10 +54,6 @@ return PhpCsFixer\Config::create()
         'trim_array_spaces' => true,
         'single_blank_line_before_namespace' => true
     ])
-    ->setFinder(
-        PhpCsFixer\Finder::create()
-            ->in(__DIR__ . '/src')
-            ->in(__DIR__ . '/test')
-    )
-    ->setRiskyAllowed(true)
-    ->setUsingCache(false);
+    ->setFinder($finder);
+
+return $config;
