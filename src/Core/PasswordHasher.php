@@ -40,12 +40,12 @@ final class PasswordHasher
     /**
      * Construct a new password hasher.
      *
-     * @param int   $passwordAlgo The password hasher algorithm to use.
+     * @param mixed $passwordAlgo The password hasher algorithm to use.
      * @param array $options      The password hasher options.
      *
      * @return void Returns nothing.
      */
-    public function __construct(public int $passwordAlgo, array $options = [])
+    public function __construct(public mixed $passwordAlgo, array $options = [])
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
