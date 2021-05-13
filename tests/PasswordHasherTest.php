@@ -243,6 +243,6 @@ class PasswordHasherTest extends TestCase
         $this->assertTrue($hasher2->needsRehash($password));
         $password = $hasher->compute('password');
         $this->assertTrue(\is_string($password));
-        $this->assertTrue(!$hashe2->needsRehash($password));
+        $this->assertTrue(!$hasher2->needsRehash($password));
     }
 }
