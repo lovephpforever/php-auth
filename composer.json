@@ -9,7 +9,9 @@
         "source": "https://github.com/lovephpforever/framework"
     },
     "require": {
-        "php": ">=8.0"
+        "php": ">=8.0",
+        "symfony/options-resolver": "^5.2",
+        "symfony/validator": "^5.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
