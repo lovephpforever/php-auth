@@ -57,9 +57,9 @@ final class PasswordHasher
      *
      * @param string $password The password to hash.
      *
-     * @return string Returns the hashed password.
+     * @return null|string Returns the hashed password.
      */
-    public function compute(string $password): string
+    public function compute(string $password): ?string
     {
         if ($this->passwordAlgo === \PASSWORD_BCRYPT && Binary::safeStrlen($password) > 72) {
             throw new InvalidArgumentException('The password supplied is invalid.');
