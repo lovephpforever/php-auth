@@ -32,7 +32,7 @@ use Symfony\Component\Validator\Validation;
  */
 final class Validator
 {
-    /** @var \Symfony\Component\Validator\Validation $validator The class validator. */
+    /** @var Symfony\Component\Validator\Validator\ValidatorInterface $validator The class validator. */
     private $validator;
 
     /**
