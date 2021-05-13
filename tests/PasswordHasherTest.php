@@ -156,7 +156,7 @@ class PasswordHasherTest extends TestCase
         $hasher2 = new PasswordHasher(\PASSWORD_ARGON2I);
         $this->assertEquals(\PASSWORD_ARGON2I, $hasher2->passwordAlgo);
         $this->assertTrue($hasher2->needsRehash($password));
-        $password = $hasher->compute('password');
+        $password = $hasher2->compute('password');
         $this->assertTrue(\is_string($password));
         $this->assertTrue(!$hasher2->needsRehash($password));
     }
@@ -173,7 +173,7 @@ class PasswordHasherTest extends TestCase
         $hasher2 = new PasswordHasher(\PASSWORD_ARGON2ID);
         $this->assertEquals(\PASSWORD_ARGON2ID, $hasher2->passwordAlgo);
         $this->assertTrue($hasher2->needsRehash($password));
-        $password = $hasher->compute('password');
+        $password = $hasher2->compute('password');
         $this->assertTrue(\is_string($password));
         $this->assertTrue(!$hasher2->needsRehash($password));
     }
@@ -190,7 +190,7 @@ class PasswordHasherTest extends TestCase
         $hasher2 = new PasswordHasher(\PASSWORD_BCRYPT);
         $this->assertEquals(\PASSWORD_BCRYPT, $hasher2->passwordAlgo);
         $this->assertTrue($hasher2->needsRehash($password));
-        $password = $hasher->compute('password');
+        $password = $hasher2->compute('password');
         $this->assertTrue(\is_string($password));
         $this->assertTrue(!$hasher2->needsRehash($password));
     }
@@ -207,7 +207,7 @@ class PasswordHasherTest extends TestCase
         $hasher2 = new PasswordHasher(\PASSWORD_ARGON2ID);
         $this->assertEquals(\PASSWORD_ARGON2ID, $hasher2->passwordAlgo);
         $this->assertTrue($hasher2->needsRehash($password));
-        $password = $hasher->compute('password');
+        $password = $hasher2->compute('password');
         $this->assertTrue(\is_string($password));
         $this->assertTrue(!$hasher2->needsRehash($password));
     }
@@ -224,7 +224,7 @@ class PasswordHasherTest extends TestCase
         $hasher2 = new PasswordHasher(\PASSWORD_BCRYPT);
         $this->assertEquals(\PASSWORD_BCRYPT, $hasher2->passwordAlgo);
         $this->assertTrue($hasher2->needsRehash($password));
-        $password = $hasher->compute('password');
+        $password = $hasher2->compute('password');
         $this->assertTrue(\is_string($password));
         $this->assertTrue(!$hasher2->needsRehash($password));
     }
@@ -241,7 +241,7 @@ class PasswordHasherTest extends TestCase
         $hasher2 = new PasswordHasher(\PASSWORD_ARGON2I);
         $this->assertEquals(\PASSWORD_ARGON2I, $hasher2->passwordAlgo);
         $this->assertTrue($hasher2->needsRehash($password));
-        $password = $hasher->compute('password');
+        $password = $hasher2->compute('password');
         $this->assertTrue(\is_string($password));
         $this->assertTrue(!$hasher2->needsRehash($password));
     }
