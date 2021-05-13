@@ -25,6 +25,7 @@
 
 namespace LovePHPForever\Core;
 
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Validation;
 
 /**
@@ -48,12 +49,12 @@ final class Validator
     /**
      * Validate the value against the constraints.
      *
-     * @param mixed $value       The value to check.
-     * @param array $constraints The validation constraints.
+     * @param mixed                                   $value       The value to check.
+     * @param \Symfony\Component\Validator\Constraint $constraints The validation constraints.
      *
      * @return mixed Returns the violations.
      */
-    public function validate(mixed $value, array $constraints): string
+    public function validate(mixed $value, Constraint|array $constraints): string
     {
         return $this->validator->validate($value, $constraints);
     }
