@@ -25,7 +25,6 @@
 
 namespace LovePHPForever\Core;
 
-use InvalidArgumentException;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 
 /**
@@ -36,8 +35,8 @@ final class Csrf
     /**
      * Construct a csrf validator.
      *
-     * @param LovePHPForever\Core\Session $session         The session handler.
-     * @param string                      $tokenNamePrefix The csrf token name prefix.
+     * @param \LovePHPForever\Core\Session $session         The session handler.
+     * @param string                       $tokenNamePrefix The csrf token name prefix.
      *
      * @return void Returns nothing.
      */
