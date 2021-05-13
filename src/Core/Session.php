@@ -92,7 +92,7 @@ final class Session
                 \session_name(),
                 '',
                 \time() - 42000,
-                (string) $params["path"]),
+                (string) $params["path"],
                 (string) $params["domain"],
                 (bool) $params["secure"],
                 (bool) $params["httponly"],
