@@ -25,7 +25,6 @@
 
 namespace LovePHPForever\Core;
 
-use RuntimeException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -33,25 +32,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class Session
 {
-    /** @var array $options The session handlers options. */
-    private $options = [];
-
     /**
      * Construct a new session handler.
      *
      * @param string $sessionName The sessions namespace.
-     * @param array  $options     The session handlers options.
      *
      * @return void Returns nothing.
      */
-    public function __construct(string $sessionName, array $options = [])
+    public function __construct(string $sessionName)
     {
         if (!\headers_sent()) {
             \session_name($sessionName);
         }
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver);
-        $this->options = $resolver->resolve($options);
         if (!$this->exists()) {
             $this->start();
         }
@@ -60,22 +52,11 @@ final class Session
     /**
      * Starts or resumes a session.
      *
-     * @throws \RuntimeException If the fingerprint supplied is invalid.
-     *
      * @return bool Returns true on success or false on failure.
      */
     public function start(): bool
     {
-        $session = \session_start();
-        if ($this->has('fingerprint')) {
-            if (!\hash_equals($this->get('fingerprint'), $this->getFingerprint())) {
-                $this->stop();
-                throw new RuntimeException('The fingerprint supplied is invalid.');
-            }
-        } else {
-            $this->put('fingerprint', $this->getFingerprint());
-        }
-        return $session;
+        return \session_start();
     }
 
     /**
@@ -190,36 +171,5 @@ final class Session
     public function delete(string $key): void
     {
         unset($_SESSION[$key]);
-    }
-
-    /**
-     * Get the fingerprint from the current accessing user.
-     *
-     * @return string Returns the session fingerprint.
-     */
-    private function getFingerprint(): string
-    {
-        $remoteIp = ($this->options['validate_ip'] && isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : '-';
-        $userAgent = ($this->options['validate_ua'] && isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '-';
-        return \hash('sha512', \sprintf('%s|%s', $remoteIp, $userAgent));
-    }
-
-    /**
-     * Configure the session handlers options.
-     *
-     * @param OptionsResolver The symfony options resolver.
-     *
-     * @return void Returns nothing.
-     */
-    private function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'fingerprinting' => \true,
-            'validate_ip'    => \true,
-            'validate_ua'    => \true,
-        ]);
-        $resolver->setAllowedTypes('fingerprinting', 'bool');
-        $resolver->setAllowedTypes('validate_ip', 'bool');
-        $resolver->setAllowedTypes('validate_ua', 'bool');
     }
 }
