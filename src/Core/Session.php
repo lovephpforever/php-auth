@@ -39,12 +39,13 @@ final class Session
     /**
      * Construct a new session handler.
      *
-     * @param string $sessionName The sessions namespace.
-     * @param array  $options     The session handlers options.
+     * @param \LovePHPForever\Core\Utilities $utilities   A utility helper.
+     * @param string                         $sessionName The sessions namespace.
+     * @param array                          $options     The session handlers options.
      *
      * @return void Returns nothing.
      */
-    public function __construct(string $sessionName, array $options = [])
+    public function __construct(public Utilities $utilities, string $sessionName, array $options = [])
     {
         if (!\headers_sent()) {
             \session_name($sessionName);
@@ -199,8 +200,8 @@ final class Session
      */
     private function getFingerprint(): string
     {
-        $remoteIp = $this->options['validate_ip'] ? $_SERVER['REMOTE_ADDR'] : '-';
-        $userAgent = $this->options['validate_ua'] ? $_SERVER['HTTP_USER_AGENT'] : '-';
+        $remoteIp = $this->options['validate_ip'] ? $this->utilities->getIp() : '-';
+        $userAgent = ($this->options['validate_ua'] && isset($_SERVER['HTTP_USER_AGENT'])) : '-';
         return \hash('sha512', \sprintf('%s|%s', $remoteIp, $userAgent));
     }
 
