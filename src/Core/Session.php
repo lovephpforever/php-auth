@@ -200,8 +200,8 @@ final class Session
      */
     private function getFingerprint(): string
     {
-        $remoteIp = $this->options['validate_ip'] ? $this->utilities->getIp() : '-';
-        $userAgent = ($this->options['validate_ua'] && isset($_SERVER['HTTP_USER_AGENT'])) : '-';
+        $remoteIp = ($this->options['validate_ip'] && isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : '-';
+        $userAgent = ($this->options['validate_ua'] && isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '-';
         return \hash('sha512', \sprintf('%s|%s', $remoteIp, $userAgent));
     }
 
