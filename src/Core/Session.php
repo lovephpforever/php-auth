@@ -39,13 +39,12 @@ final class Session
     /**
      * Construct a new session handler.
      *
-     * @param \LovePHPForever\Core\Utilities $utilities   A utility helper.
-     * @param string                         $sessionName The sessions namespace.
-     * @param array                          $options     The session handlers options.
+     * @param string $sessionName The sessions namespace.
+     * @param array  $options     The session handlers options.
      *
      * @return void Returns nothing.
      */
-    public function __construct(public Utilities $utilities, string $sessionName, array $options = [])
+    public function __construct(string $sessionName, array $options = [])
     {
         if (!\headers_sent()) {
             \session_name($sessionName);
