@@ -39,34 +39,7 @@ class SessionTest extends TestCase
      *
      * @return void Returns nothing.
      */
-    public function testSessionConstruction(): void
-    {
-        $session = new Session('session');
-        $this->assertEquals(\session_name(), 'session');
-        $this->assertTrue($session->exists());
-    }
-
-    /**
-     * @runInSeparateProcess
-     *
-     * @return void Returns nothing.
-     */
-    public function testSessionPutMethod(): void
-    {
-        $session = new Session('session');
-        $this->assertEquals(\session_name(), 'session');
-        $this->assertTrue($session->exists());
-        $this->assertTrue(!$session->has('hello'));
-        $session->put('hello', 'World');
-        $this->assertTrue($session->has('hello'));
-    }
-
-    /**
-     * @runInSeparateProcess
-     *
-     * @return void Returns nothing.
-     */
-    public function testSessionFlashMethod(): void
+    public function testSession(): void
     {
         $session = new Session('session');
         $this->assertEquals(\session_name(), 'session');
@@ -78,25 +51,10 @@ class SessionTest extends TestCase
         $this->assertTrue(!$session->has('hello'));
         $this->assertTrue($session->get('hello', \true));
         $this->assertEquals($flashed, 'World');
-    }
-
-    /**
-     * @runInSeparateProcess
-     *
-     * @return void Returns nothing.
-     */
-    public function testSessionDestroyMethod(): void
-    {
-        $session = new Session('session');
-        $this->assertEquals(\session_name(), 'session');
-        $this->assertTrue($session->exists());
-        $this->assertTrue(!$session->has('hello'));
         $session->put('hello', 'World');
         $this->assertTrue($session->has('hello'));
-        $flashed = $session->flash('hello');
+        $session->delete('hello');
         $this->assertTrue(!$session->has('hello'));
-        $this->assertTrue($session->get('hello', \true));
-        $this->assertEquals($flashed, 'World');
         $session->stop();
         $this->assertTrue(!$session->exists());
     }
