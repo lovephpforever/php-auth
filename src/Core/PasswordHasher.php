@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * The password hasher.
  */
-final class PasswordHasher
+final class PasswordHasher implements PasswordProtector
 {
     /** @var array $options The password hasher options. */
     private array $options = [];
