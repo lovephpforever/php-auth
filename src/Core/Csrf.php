@@ -71,11 +71,11 @@ final class Csrf implements CsrfProtector
     public function initialize(): string
     {
         $token = $this->generate();
-        $session->set('token', $token);
+        $this->session->set('token', $token);
         $accessedFrom => isset($_SERVER['REQUEST_URI'])
             ? $_SERVER['REQUEST_URI']
             : $_SERVER['SCRIPT_NAME'];
-        $session->set('accessed_from', $accessedFrom);
+        $this->session->set('accessed_from', $accessedFrom);
         return $token;
     }
 
@@ -101,14 +101,14 @@ final class Csrf implements CsrfProtector
     {
         if (!isset($postData['token'])) {
             throw new UnderflowException('No token was supplied.');
-        } elseif (!$session->has('token')) {
+        } elseif (!$this->session->has('token')) {
             throw new UnderflowException('No token was ever stored.');
         } else {
             $accessedFrom => isset($_SERVER['REQUEST_URI'])
                 ? $_SERVER['REQUEST_URI']
                 : $_SERVER['SCRIPT_NAME'];
-            if (\hash_equals((string) $postData['token'], (string) $session->has('token'))) {
-                if (!\hash_equals((string) $accessedFrom, (string) $session->has('accessed_from'))) {
+            if (\hash_equals((string) $postData['token'], (string) $this->session->has('token'))) {
+                if (!\hash_equals((string) $accessedFrom, (string) $this->session->has('accessed_from'))) {
                     throw new RuntimeException('The stored uri does not match the one provided.');
                 }
             } else {
