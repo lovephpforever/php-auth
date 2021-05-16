@@ -25,24 +25,29 @@
 
 namespace LovePHPForever\Core;
 
+use InvalidArgumentException;
 use ParagonIE\ConstantTime\Base64UrlSafe;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use UnderflowException;
 
 /**
- * The csrf validator.
+ * The csrf handler.
  */
-final class Csrf
+final class Csrf implements CsrfProtector
 {
     /**
-     * Construct a csrf validator.
+     * Construct a csrf handler.
      *
-     * @param \LovePHPForever\Core\Session $session         The session handler.
-     * @param string                       $tokenNamePrefix The csrf token name prefix.
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session The session handler.
      *
      * @return void Returns nothing.
      */
-    public function __construct(public Session $session, public string $tokenNamePrefix = 'csrf_')
+    public function __construct(public Session $session)
     {
-        //
+        if (!$session->isStarted()) {
+            throw new RuntimeException('No session was ever started.');
+        }
     }
 
     /**
@@ -53,5 +58,35 @@ final class Csrf
     public function generate(): string
     {
         return Base64UrlSafe::encode(\random_bytes(33));
+    }
+
+    /**
+     * Resets a new csrf token per each request.
+     *
+     * @return string Returns the secure csrf token.
+     */
+    public function initialize(): string
+    {
+        $token = $this->generate();
+        $session->set('token', $token);
+        return $token;
+    }
+
+    /**
+     * Verify that the request token matches the stored csrf token.
+     *
+     * @return void Returns nothing.
+     */
+    public function verify(array $postData): void
+    {
+        if (!isset($postData['token'])) {
+            throw new UnderflowException('No token was supplied.');
+        } elseif (!$session->has('token')) {
+            throw new UnderflowException('No token was ever stored.');
+        } elseif (!hash_equals((string) $postData['token'], (string) $session->has('token'))) {
+            throw new InvalidArgumentException('The token supplied is invalid.');
+        } else {
+            return \true;
+        }
     }
 }
