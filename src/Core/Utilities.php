@@ -102,6 +102,16 @@ final class Utilities implements Helper
     }
 
     /**
+     * Get the url with the schema.
+     *
+     * @return string Returns the url with the schema.
+     */
+    public function getUrlWithSchema(): string
+    {
+        return "https://{$this->options['host']}";
+    }
+
+    /**
      * Configure the class manager options.
      *
      * @param OptionsResolver The symfony options resolver.
