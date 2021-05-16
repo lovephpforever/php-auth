@@ -36,7 +36,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class Utilities implements Helper
 {
     /** @var array $options The class utilities options. */
-    private $options = [];
+    private array $options = [];
 
     /**
      * Construct a class utilities manager.
