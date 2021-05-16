@@ -45,7 +45,7 @@ final class Csrf implements CsrfProtector
      * @return void Returns nothing.
      */
     public function __construct(
-        public Session $session,
+        public SessionInterface $session,
         public Helper $helper
     ) {
         if (!$session->isStarted()) {
