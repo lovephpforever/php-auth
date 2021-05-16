@@ -27,6 +27,7 @@ namespace LovePHPForever\Core;
 
 use ParagonIE\ConstantTime\Binary;
 use RangeException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -93,43 +94,11 @@ final class Utilities implements Helper
      * @param string $url        The location where to send the user.
      * @param int    $statusCode The HTTP redirect stats code.
      *
-     * @return void Returns nothing.
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse Returns the HTTP redirect response.
      */
-    public function redirect(string $url, int $statusCode = 303): void
+    public function redirect(string $url, int $statusCode = 303): RedirectResponse
     {
-        if (!\headers_sent()) {
-            \header('Location: ' . $url, \true, $statusCode);
-        } else {
-            echo "<meta http-equiv=\"refresh\" content=\"0;url=$url\" />";
-            echo "<script type=\"application/javascript\">";
-            echo "window.location.replace(\"$url\");";
-            echo "</script>";
-        }
-        exit();
-    }
-
-    /**
-     * Force the user to use an encrypted connection.
-     *
-     * @return void Returns nothing.
-     */
-    public function enforceHttps(): void
-    {
-        if (empty($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] !== 'on') {
-            $this->redirect($this->getBaseUrl() . $_SERVER['REQUEST_URI'], 301);
-        }
-    }
-
-    /**
-     * Get the base url of this web app.
-     *
-     * @param bool $https Should we include https?
-     *
-     * @return string Returns the base url.
-     */
-    public function getBaseUrl($https = \true): string
-    {
-        return $https ? 'https://' . $this->options['host'] : 'http://' . $this->options['host'];
+        return new RedirectResponse($url, $statusCode);
     }
 
     /**
