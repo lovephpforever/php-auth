@@ -93,12 +93,14 @@ final class Utilities implements Helper
      *
      * @param string $url        The location where to send the user.
      * @param int    $statusCode The HTTP redirect stats code.
+     * @param bool   $useSchema  Should we include the schema.
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse Returns the HTTP redirect response.
      */
-    public function redirect(string $url, int $statusCode = 303): RedirectResponse
+    public function redirect(string $url, int $statusCode = 303, bool $useSchema = \true): RedirectResponse
     {
-        return new RedirectResponse($url, $statusCode);
+        $schema = $useSchema ? 'https://' : '';
+        return new RedirectResponse($schema . $url, $statusCode);
     }
 
     /**
