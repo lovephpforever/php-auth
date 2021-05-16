@@ -36,4 +36,5 @@ interface Helper
     public function e(string $text, int $flags = \ENT_QUOTES, string|null $encoding = \null, bool $doubleEncoding = \true): string;
     public function generateString(int $length = 64, string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'): string;
     public function redirect(string $url, int $statusCode = 303): RedirectResponse;
+    public function getUrlWithSchema(): string;
 }
