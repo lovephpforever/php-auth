@@ -44,7 +44,7 @@ final class Utilities
      *
      * @return void Returns nothing.
      */
-    public function __construct(\array $options = [])
+    public function __construct(array $options = [])
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
