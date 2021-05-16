@@ -49,8 +49,8 @@ final class Validator
     /**
      * Validate the value against the constraints.
      *
-     * @param mixed                                   $value       The value to check.
-     * @param \Symfony\Component\Validator\Constraint $constraints The validation constraints.
+     * @param mixed                                         $value       The value to check.
+     * @param \Symfony\Component\Validator\Constraint|array $constraints The validation constraints.
      *
      * @return mixed Returns the violations.
      */
