@@ -72,7 +72,7 @@ final class Csrf implements CsrfProtector
     {
         $token = $this->generate();
         $this->session->set('token', $token);
-        $accessedFrom => isset($_SERVER['REQUEST_URI'])
+        $accessedFrom = isset($_SERVER['REQUEST_URI'])
             ? $_SERVER['REQUEST_URI']
             : $_SERVER['SCRIPT_NAME'];
         $this->session->set('accessed_from', $accessedFrom);
@@ -104,7 +104,7 @@ final class Csrf implements CsrfProtector
         } elseif (!$this->session->has('token')) {
             throw new UnderflowException('No token was ever stored.');
         } else {
-            $accessedFrom => isset($_SERVER['REQUEST_URI'])
+            $accessedFrom = isset($_SERVER['REQUEST_URI'])
                 ? $_SERVER['REQUEST_URI']
                 : $_SERVER['SCRIPT_NAME'];
             if (\hash_equals((string) $postData['token'], (string) $this->session->has('token'))) {
