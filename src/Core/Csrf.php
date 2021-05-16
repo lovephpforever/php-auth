@@ -40,11 +40,14 @@ final class Csrf implements CsrfProtector
      * Construct a csrf handler.
      *
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session The session handler.
+     * @param \LovePHPForever\Core\Helper                                $helper  The helper class.
      *
      * @return void Returns nothing.
      */
-    public function __construct(public Session $session)
-    {
+    public function __construct(
+        public Session $session,
+        public Helper $helper
+    ) {
         if (!$session->isStarted()) {
             throw new RuntimeException('No session was ever started.');
         }
@@ -70,6 +73,19 @@ final class Csrf implements CsrfProtector
         $token = $this->generate();
         $session->set('token', $token);
         return $token;
+    }
+
+    /**
+     * Generate a custom csrf field based on the token passed.
+     *
+     * @return string Returns the custom csrf field.
+     */
+    public function generateField(string $token): string
+    {
+        $html = "<input type=\"hidden\" name=\"token\" value=\"";
+        $html .= $this->helper->e($token);
+        $html .= "\" />";
+        return $html;
     }
 
     /**
