@@ -30,7 +30,7 @@ namespace LovePHPForever\Core;
  */
 interface PasswordProtector
 {
-    public function __construct(public int|string $passwordAlgo, array $options = []);
+    public function __construct(int|string $passwordAlgo, array $options = []);
     public function compute(string $password): ?string;
     public function verify(string $password, string $hash): bool;
     public function needsRehash(string $hash): bool;
