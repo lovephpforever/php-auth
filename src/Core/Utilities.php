@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * The basic class utilities.
  */
-final class Utilities
+final class Utilities implements Helper
 {
     /** @var array $options The class utilities options. */
     private $options = [];
