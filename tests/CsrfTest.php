@@ -162,4 +162,21 @@ class CsrfTest extends TestCase
         $protector->verify(['token' => $session->get('token')]);
         $this->assertTrue(\true);
     }
+
+    /**
+     * @runInSeparateProcess
+     *
+     * @return void Returns nothing.
+     */
+    public function testCsrfTokenOutput(): void
+    {
+        $session = new Session();
+        $session->start();
+        $helper = new Utilities();
+        $protector = new Csrf($session, $helper);
+        $protector->initialize();
+        $this->assertTrue($session->has('token'));
+        $this->assertTrue($session->has('accessed_from'));
+        $this->assertEquals($protector->generateField('token'), "<input type=\"hidden\" name=\"token\" value=\"token\" />");
+    }
 }

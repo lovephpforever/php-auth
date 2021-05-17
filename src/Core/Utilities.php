@@ -64,7 +64,7 @@ final class Utilities implements Helper
      */
     public function e(string $text, int $flags = \ENT_QUOTES, string|null $encoding = \null, bool $doubleEncoding = \true): string
     {
-        return \htmlspecialchars($string, $flags, $encoding);
+        return \htmlspecialchars($text, $flags, $encoding);
     }
 
     /**
