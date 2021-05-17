@@ -25,18 +25,14 @@
 
 namespace LovePHPForever\Core;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
- * The basic helper.
+ * The core validation.
  */
-interface Helper
+interface Validation
 {
-    public function __construct(
-        array $options = []
-    );
-    public function e(string $text, int $flags = \ENT_QUOTES, string|null $encoding = \null, bool $doubleEncoding = \true): string;
-    public function generateString(int $length = 64, string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'): string;
-    public function redirect(string $url, int $statusCode = 303): RedirectResponse;
-    public function getUrlWithSchema(): string;
+    public function __construct();
+    public function validate(mixed $value, Constraint|array $constraints): ConstraintViolationListInterface;
 }

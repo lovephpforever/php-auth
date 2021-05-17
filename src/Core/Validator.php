@@ -26,12 +26,13 @@
 namespace LovePHPForever\Core;
 
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validation as SymfonyValidation;
 
 /**
  * The class validator.
  */
-final class Validator
+final class Validator implements Validation
 {
     /** @var \Symfony\Component\Validator\Validator\ValidatorInterface $validator The class validator. */
     private $validator;
@@ -43,18 +44,18 @@ final class Validator
      */
     public function __construct()
     {
-        $this->validator = Validation::createValidator();
+        $this->validator = SymfonyValidation::createValidator();
     }
 
     /**
      * Validate the value against the constraints.
      *
-     * @param mixed                                         $value       The value to check.
-     * @param \Symfony\Component\Validator\Constraint|array $constraints The validation constraints.
+     * @param mixed                                   $value       The value to check.
+     * @param \Symfony\Component\Validator\Constraint $constraints The validation constraints.
      *
-     * @return mixed Returns the violations.
+     * @return \Symfony\Component\Validator\ConstraintViolationListInterface Returns the violations.
      */
-    public function validate(mixed $value, Constraint|array $constraints): string
+    public function validate(mixed $value, Constraint|array $constraints): ConstraintViolationListInterface
     {
         return $this->validator->validate($value, $constraints);
     }

@@ -33,8 +33,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 interface CsrfProtector
 {
     public function __construct(
-        public SessionInterface $session,
-        public Helper $helper
+        SessionInterface $session,
+        Helper $helper
     );
     public function generate(): string;
     public function initialize(): string;

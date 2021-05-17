@@ -45,8 +45,10 @@ final class PasswordHasher implements PasswordProtector
      *
      * @return void Returns nothing.
      */
-    public function __construct(public int|string $passwordAlgo, array $options = [])
-    {
+    public function __construct(
+        public int|string $passwordAlgo,
+        array $options = []
+    ) {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
         $this->options = $resolver->resolve($options);
