@@ -27,6 +27,7 @@ namespace LovePHPForever\Core;
 
 use RuntimeException;
 use Symfony\Component\Translation\Translator as SymfonyTranslator;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 
 /**
@@ -34,6 +35,9 @@ use Symfony\Component\Translation\Loader\ArrayLoader;
  */
 final class Translation implements Translator
 {
+    /** @var \Symfony\Component\Translation\TranslatorInterface $translator The symfony translator. */
+    private $translator;
+
     /**
      * Construct a new translation handler.
      *
