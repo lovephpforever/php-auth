@@ -50,8 +50,8 @@ final class Validator implements Validation
     /**
      * Validate the value against the constraints.
      *
-     * @param mixed                                   $value       The value to check.
-     * @param \Symfony\Component\Validator\Constraint $constraints The validation constraints.
+     * @param mixed                                                          $value       The value to check.
+     * @param Symfony\Component\Validator\Constraint|array<array-key, mixed> $constraints The validation constraints.
      *
      * @return \Symfony\Component\Validator\ConstraintViolationListInterface Returns the violations.
      */
