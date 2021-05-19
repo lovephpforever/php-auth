@@ -58,12 +58,12 @@ final class Security implements Protector
         if (headers_sent()) {
             throw new RuntimeException('Headers already sent.');
         } elseif ((bool) $this->session->get('logged_in', false) || !$onlyApplyToLoggedInUsers) {
-			\header('X-Frame-Options: sameorigin');
-			\header('X-Content-Type-Options: nosniff');
-			\header('Cache-Control: no-store, no-cache, must-revalidate', true);
-			\header('Expires: Thu, 19 Nov 1981 00:00:00 GMT', true);
-			\header('Pragma: no-cache', true);
-		}
+            \header('X-Frame-Options: sameorigin');
+            \header('X-Content-Type-Options: nosniff');
+            \header('Cache-Control: no-store, no-cache, must-revalidate', true);
+            \header('Expires: Thu, 19 Nov 1981 00:00:00 GMT', true);
+            \header('Pragma: no-cache', true);
+        }
     }
 
     /**
