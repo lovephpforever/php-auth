@@ -53,6 +53,8 @@ final class Validator implements Validation
      * @param mixed                                                          $value       The value to check.
      * @param \Symfony\Component\Validator\Constraint|array<array-key, mixed> $constraints The validation constraints.
      *
+     * @psalm-suppress MixedArgumentTypeCoercion
+     *
      * @return \Symfony\Component\Validator\ConstraintViolationListInterface Returns the violations.
      */
     public function validate(mixed $value, Constraint|array $constraints): ConstraintViolationListInterface
