@@ -60,6 +60,7 @@ final class Translation implements Translator
      */
     public function add(string $resource, string $resourceLang): void
     {
+        /** @var array */
         $resourceData = require $resource;
         $this->translator->addResource('array', $resourceData, $resourceLang);
     }
