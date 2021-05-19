@@ -108,7 +108,7 @@ final class Csrf implements CsrfProtector
                 ? (string) $_SERVER['REQUEST_URI']
                 : (string) $_SERVER['SCRIPT_NAME'];
             if (\hash_equals((string) $postData['token'], (string) $this->session->get('token'))) {
-                if (!\hash_equals((string) $accessedFrom, (string) $this->session->get('accessed_from'))) {
+                if (!\hash_equals($accessedFrom, (string) $this->session->get('accessed_from'))) {
                     throw new RuntimeException('The stored uri does not match the one provided.');
                 }
             } else {
