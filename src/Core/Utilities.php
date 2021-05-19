@@ -56,7 +56,7 @@ final class Utilities implements Helper
      * Removes single and double quotes.
      *
      * @param string      $text           The text to alter.
-     * @param int         $flags          A butmask flag alter.
+     * @param int         $flags          A bitmask flag alter.
      * @param string|null $ecoding        The alter encoding.
      * @param bool        $doubleEncoding Should we enable double encoding?
      *
@@ -78,7 +78,7 @@ final class Utilities implements Helper
     public function generateString(int $length = 64, string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'): string
     {
         if ($length < 1) {
-            throw new RangeException('Length must be a positive integer');
+            throw new RangeException('Length must be a positive integer.');
         }
         $pieces = [];
         $max = Binary::safeStrlen($keyspace) - 1;

@@ -26,9 +26,8 @@
 namespace LovePHPForever\Core;
 
 use RuntimeException;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Translator as SymfonyTranslator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
-use Symfony\Component\Translation\Loader\LoaderInterface;
 
 /**
  * The translation handler.
@@ -44,7 +43,7 @@ final class Translation implements Translator
      */
     public function __construct(string $currLang = 'en-US')
     {
-        $this->translator = new Translator($currLang);
+        $this->translator = new SymfonyTranslator($currLang);
         $this->translator->addLoader('array', new ArrayLoader());
     }
 
@@ -55,21 +54,24 @@ final class Translation implements Translator
      *
      * @return void Returns nothing.
      */
-    pulic function add(string $resource): void
+    public function add(string $resource, string $resourceLang): void
     {
-        $resourceData = require __DIR__ . "/../../translations/{$resource}.php";
-        $translator->addResource('array', $resourceData, $resource);
+        $resourceData = require $resource;
+        $this->translator->addResource('array', $resourceData, $resourceLang);
     }
  
     /**
      * Translate a language variable.
      *
-     * @param string $langVar The translation key.
+     * @param string $langVar   The translation key.
+     * @param array  $params    The text parameters.
+     * @param string $domain    The message domain.
+     * @param string $forceLang The local to enforce.
      *
      * @return string Returns the translation.
      */
-    public function trans(string $langVar): string
+    public function trans(string $langVar, array $params = [], string $domain = null, string $forceLang = null): string
     {
-        return $this->translator->trans($langVar);
+        return $this->translator->trans($langVar, $params, $domain, $forceLang);
     }
 }
