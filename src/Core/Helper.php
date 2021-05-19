@@ -35,7 +35,7 @@ interface Helper
     public function __construct(
         array $options = []
     );
-    public function e(string $text, int $flags = \ENT_QUOTES, string $encoding = 'UTF-8', bool $doubleEncoding = \true): string
+    public function e(string $text, int $flags = \ENT_QUOTES, string $encoding = 'UTF-8', bool $doubleEncoding = \true): string;
     public function generateString(int $length = 64, string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'): string;
     public function redirect(string $url, int $statusCode = 303): RedirectResponse;
     public function getUrlWithSchema(): string;
