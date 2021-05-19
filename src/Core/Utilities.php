@@ -55,14 +55,14 @@ final class Utilities implements Helper
     /**
      * Removes single and double quotes.
      *
-     * @param string      $text           The text to alter.
-     * @param int         $flags          A bitmask flag alter.
-     * @param string|null $ecoding        The alter encoding.
-     * @param bool        $doubleEncoding Should we enable double encoding?
+     * @param string $text           The text to alter.
+     * @param int    $flags          A bitmask flag alter.
+     * @param string $ecoding        The alter encoding.
+     * @param bool   $doubleEncoding Should we enable double encoding?
      *
      * @return string Returns the altered text.
      */
-    public function e(string $text, int $flags = \ENT_QUOTES, string|null $encoding = \null, bool $doubleEncoding = \true): string
+    public function e(string $text, int $flags = \ENT_QUOTES, string $encoding = 'UTF-8', bool $doubleEncoding = \true): string
     {
         return \htmlspecialchars($text, $flags, $encoding);
     }
