@@ -56,6 +56,8 @@ final class Translation implements Translator
      *
      * @param string $resourcePath The filename of the array resource.
      *
+     * @psalm-suppress UnresolvableInclude
+     *
      * @return void Returns nothing.
      */
     public function add(string $resource, string $resourceLang): void
