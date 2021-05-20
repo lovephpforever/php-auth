@@ -54,11 +54,11 @@ final class Security implements Protector
     /**
      * Check to see if too many requests have been made to the server.
      *
-     * @return void Returns nothing.
+     * @return bool Returns true if too many server requests have been made.
      */
     public function hasTooManyServerRequestsAndConsume(): bool
     {
-        if (headers_sent()) {
+        if (\headers_sent()) {
             throw new RuntimeException('Headers already sent.');
         }
         $limit = $this->limiter->consume();
@@ -92,7 +92,7 @@ final class Security implements Protector
      */
     public function applySecurityHeaders(bool $onlyApplyToLoggedInUsers = \true): void
     {
-        if (headers_sent()) {
+        if (\headers_sent()) {
             throw new RuntimeException('Headers already sent.');
         } elseif ((bool) $this->session->get('logged_in', \false) || !$onlyApplyToLoggedInUsers) {
             \header('X-Frame-Options: sameorigin');
@@ -115,7 +115,7 @@ final class Security implements Protector
      *
      * @return void Returns nothing.
      */
-    public function enforceSessionSecurityConfig(bool $cookieSameSite = "Lax", bool $enforceHttps = true): void
+    public function enforceSessionSecurityConfig(string $cookieSameSite = "Lax", bool $enforceHttps = true): void
     {
         \ini_set('session.cookie_secure', $enforceHttps);
         \ini_set('session.cookie_httponly', \true);
