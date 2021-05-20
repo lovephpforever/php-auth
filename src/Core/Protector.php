@@ -1,4 +1,3 @@
-
 <?php declare(strict_types=1);
 /**
  * MIT License
@@ -26,16 +25,22 @@
 
 namespace LovePHPForever\Core;
 
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\RateLimiter\LimiterInterface;
 
 /**
- * The security protector.
+ * The protector.
  */
 interface Protector
 {
     public function __construct(
-        public SessionInterface $session
+        public SessionInterface $session,
+        public CsrfProtector $csrfProtector,
+        public LimiterInterface $rateLimiter
     );
-    public function applySecurityHeaders(bool $onlyApplyToLoggedInUsers = true): void;
-    public function enforceSessionSecurityConfig(bool $cookieSameSite = "Lax", bool $enforceHttps = true): void;
+    public function hasTooManyServerRequestsAndConsume(): bool;
+    public function requestPreRun(array $postData): void;
+    public function applySecurityHeaders(bool $onlyApplyToLoggedInUsers = \true): void;
+    public function enforceSessionSecurityConfig(bool $cookieSameSite = "Lax", bool $enforceHttps = \true): void;
 }

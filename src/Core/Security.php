@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\RateLimiter\LimiterInterface;
 
 /**
- * The password hasher.
+ * The security component.
  */
 final class Security implements Protector
 {
