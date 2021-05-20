@@ -42,5 +42,5 @@ interface Protector
     public function hasTooManyServerRequestsAndConsume(): bool;
     public function requestPreRun(array $postData): void;
     public function applySecurityHeaders(bool $onlyApplyToLoggedInUsers = \true): void;
-    public function enforceSessionSecurityConfig(bool $cookieSameSite = "Lax", bool $enforceHttps = \true): void;
+    public function enforceSessionSecurityConfig(string $cookieSameSite = "Lax", bool $enforceHttps = \true): void;
 }
